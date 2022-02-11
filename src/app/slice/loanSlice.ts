@@ -26,13 +26,25 @@ export interface Offer {
 export interface LoanState {
     amount: number;
     term: number;
-    isLoadingConstraints: boolean;
+    loadingLoanOffer: boolean;
     constraints: Constraints;
     loanOffer: Offer;
 }
 
-const initialAmountInterval = {min: 1, max: 10, step: 1, defaultValue: 10}
-const initialTermInterval = {min: 1, max: 10, step: 1, defaultValue: 3}
+const initialAmountInterval = {
+    min: 1,
+    max: 10,
+    step: 1,
+    defaultValue: 10
+}
+
+const initialTermInterval = {
+    min: 1,
+    max: 10,
+    step: 1,
+    defaultValue: 3
+}
+
 const initialOffer = {
     totalPrincipal: 1000,
     term: 5,
@@ -44,7 +56,7 @@ const initialOffer = {
 const initialState: LoanState = {
     amount: initialAmountInterval.defaultValue,
     term: initialTermInterval.defaultValue,
-    isLoadingConstraints: true,
+    loadingLoanOffer: false,
     constraints: {
         amountInterval: initialAmountInterval,
         termInterval: initialTermInterval
@@ -63,9 +75,11 @@ export const fetchConstraints = (dispatch: Dispatch<any>) => {
 
 export const fetchLoanOffer = (amount: number, term: number) => {
     return (dispatch: Dispatch<any>) => {
+        dispatch(setLoadingLoanOffer(true))
         getLoanOffer(amount, term)
             .then(({data}) => {
                 dispatch(setLoanOffer(data));
+                dispatch(setLoadingLoanOffer(false))
             });
     }
 }
@@ -85,15 +99,19 @@ export const loanSlice = createSlice({
         },
         setLoanOffer: (state, action: PayloadAction<Offer>) => {
             state.loanOffer = action.payload
+        },
+        setLoadingLoanOffer: (state, action: PayloadAction<boolean>) => {
+            state.loadingLoanOffer = action.payload
         }
     }
 });
 
-export const {setAmount, setTerm, setConstraints, setLoanOffer} = loanSlice.actions;
+export const {setAmount, setTerm, setConstraints, setLoanOffer, setLoadingLoanOffer} = loanSlice.actions;
 
 export const selectAmount = (state: RootState) => state.loan.amount;
 export const selectTerm = (state: RootState) => state.loan.term;
 export const selectConstraints = (state: RootState) => state.loan.constraints;
 export const selectLoanOffer = (state: RootState) => state.loan.loanOffer;
+export const selectLoadingLoanOffer = (state: RootState) => state.loan.loadingLoanOffer;
 
 export default loanSlice.reducer;

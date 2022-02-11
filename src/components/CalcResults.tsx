@@ -1,47 +1,51 @@
-import { Grid, Button, Typography } from "@mui/material";
+import {Grid, Button, Typography} from "@mui/material";
 import React from "react";
+import {useAppSelector} from "../app/hooks";
+import {selectLoanOffer} from "../app/slice/loanSlice";
 
-const CalcResults = (props: { term: number, total: number, monthly: number, credit: number, repayable: number }) => {
+const CalcResults = () => {
+    const loanOffer = useAppSelector(selectLoanOffer)
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
-                <Typography variant="body1" >Total</Typography>
+                <Typography variant="body1">Total</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >{props.total}</Typography>
+                <Typography variant="body1">{loanOffer.totalPrincipal}</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >Term</Typography>
+                <Typography variant="body1">Term</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >{props.term}</Typography>
+                <Typography variant="body1">{loanOffer.term}</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >Credit</Typography>
+                <Typography variant="body1">Credit</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >{props.credit}</Typography>
+                <Typography variant="body1">{loanOffer.totalCostOfCredit}</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >Repayable</Typography>
+                <Typography variant="body1">Repayable</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >{props.repayable}</Typography>
+                <Typography variant="body1">{loanOffer.totalRepayableAmount}</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >Monthly</Typography>
+                <Typography variant="body1">Monthly</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >{props.monthly}</Typography>
+                <Typography variant="body1">{loanOffer.monthlyPayment}</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >Some date</Typography>
+                <Typography variant="body1">Some date</Typography>
             </Grid>
             <Grid item xs={6}>
-                <Typography variant="body1" >26/FEB/2022</Typography>
+                <Typography variant="body1">26/FEB/2022</Typography>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant="body1" >Text text text</Typography>
+                <Typography variant="body1">Text text text</Typography>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained">Submit</Button>

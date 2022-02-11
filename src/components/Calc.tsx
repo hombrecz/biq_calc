@@ -7,7 +7,7 @@ const Calc = () => {
     return (
         <Container>
             <CalcForm/>
-            <CalcResults total={1000} term={5} credit={100} repayable={1200} monthly={240} />
+            <CalcResults/>
         </Container>
     );
 }

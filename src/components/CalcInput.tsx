@@ -3,14 +3,14 @@ import React from "react";
 
 type Props = {
     min: number;
-    defaultValue: number;
+    value: number;
     max: number;
     name: string;
     step: number;
     onValueChange: (value: number) => void;
 }
 
-const CalcInput = ({ min, defaultValue, max, name, step, onValueChange }: Props) => {
+const CalcInput = ({ min, value, max, name, step, onValueChange }: Props) => {
 
     const steps = (from: number, to: number, step: number) => [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
 
@@ -32,12 +32,12 @@ const CalcInput = ({ min, defaultValue, max, name, step, onValueChange }: Props)
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={defaultValue}
+                        value={value}
                         label={name}
                         onChange={selectChangedHandler}
                     >
                         {steps(min, max, step).map((step) =>
-                            <MenuItem value={step}>{step}</MenuItem>)
+                            <MenuItem key={step} value={step}>{step}</MenuItem>)
                         }
                     </Select>
                 </FormControl>
@@ -45,7 +45,7 @@ const CalcInput = ({ min, defaultValue, max, name, step, onValueChange }: Props)
             <Grid item xs={12}>
                 <Slider
                     aria-label={name}
-                    value={defaultValue}
+                    value={value}
                     valueLabelDisplay="auto"
                     step={step}
                     marks
